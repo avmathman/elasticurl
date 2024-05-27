@@ -1,8 +1,9 @@
 package com.avmathman.elasticurl.api.controllers.URLShortner;
 
 import com.avmathman.elasticurl.api.ElasticURLApiLocations;
+import com.avmathman.elasticurl.domain.URLShortner.URLShortnerModel;
 import com.avmathman.elasticurl.domain.URLShortner.URLShortnerService;
-import com.avmathman.elasticurl.domain.URLShortner.dto.ShortnerURLDto;
+import com.avmathman.elasticurl.api.controllers.URLShortner.dto.ShortnerURLDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -38,9 +39,9 @@ public class URLShortnerController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> createShortURL(@RequestBody ShortnerURLDto dto) {
-        String shortURL = this.urlShortnerService.shortenURL(dto);
+        URLShortnerModel shortURL = this.urlShortnerService.shortenURL(dto);
 
-        return new ResponseEntity<>(shortURL, HttpStatus.CREATED);
+        return new ResponseEntity<>(shortURL.getShortURL(), HttpStatus.CREATED);
     }
 
     /**
@@ -51,8 +52,8 @@ public class URLShortnerController {
     @GetMapping("/shortUrl/{encodedId}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> getShortURL(@PathVariable String encodedId) {
-        String shortURL = this.urlShortnerService.getShortURL(encodedId);
+        URLShortnerModel model = this.urlShortnerService.getShortURL(encodedId);
 
-        return new ResponseEntity<>(shortURL, HttpStatus.OK);
+        return new ResponseEntity<>(model.getShortURL(), HttpStatus.OK);
     }
 }

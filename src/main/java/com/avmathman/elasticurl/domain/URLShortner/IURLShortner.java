@@ -1,6 +1,6 @@
 package com.avmathman.elasticurl.domain.URLShortner;
 
-import com.avmathman.elasticurl.domain.URLShortner.dto.ShortnerURLDto;
+import com.avmathman.elasticurl.api.controllers.URLShortner.dto.ShortnerURLDto;
 
 public interface IURLShortner {
 
@@ -10,13 +10,13 @@ public interface IURLShortner {
      * @param dto - The {@link ShortnerURLDto} dto.
      * @return The shortened URL.
      */
-    public String shortenURL(ShortnerURLDto dto);
+    public URLShortnerModel shortenURL(ShortnerURLDto dto);
 
     /**
      * Returns actual url from persisted data.
      *
      * @param encodedId - The encoded ID.
-     * @return The actual url from persisted data.
+     * @return The {@link URLShortnerModel} model with actual url from persisted data.
      */
-    public String getShortURL(String encodedId);
+    public URLShortnerModel getShortURL(String encodedId);
 }

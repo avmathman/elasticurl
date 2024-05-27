@@ -2,6 +2,7 @@ buildscript {
 	ext {
 		springBootVersion = '3.2.6'
 		lombokVersion = '1.18.32'
+		mapStructVersion = '1.3.1.Final'
 	}
 	repositories {
 		mavenCentral()
@@ -37,14 +38,19 @@ repositories {
 dependencies {
 
 	// Spring dependencies:
-//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 //	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 //	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
 
 	// Annotation processors:
+	implementation("org.mapstruct:mapstruct:$mapStructVersion")
+	compileOnly("org.mapstruct:mapstruct-processor:$mapStructVersion")
 	compileOnly "org.projectlombok:lombok:${lombokVersion}"
-	annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+	annotationProcessor (
+			"org.projectlombok:lombok:${lombokVersion}",
+			"org.mapstruct:mapstruct-processor:$mapStructVersion"
+	)
 
 	// Test dependencies
 	testRuntimeOnly "org.junit.platform:junit-platform-launcher"

@@ -1,4 +1,4 @@
-package com.avmathman.elasticurl.domain.URLShortner.dto;
+package com.avmathman.elasticurl.api.controllers.URLShortner.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
