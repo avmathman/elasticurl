@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class Base64ConverterService implements IBaseConverter {
 
-    private final int MAX_LENGTH = 7;
+    private final int MAX_LENGTH = 11;
     private final long BASE_VALUE = 62;
     private final String BASE_DIGITS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
@@ -20,6 +20,8 @@ public class Base64ConverterService implements IBaseConverter {
             sb.append(current);
 
             value = value / BASE_VALUE;
+
+            i++;
         }
 
         return sb.reverse().toString();
