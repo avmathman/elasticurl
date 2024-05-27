@@ -1,41 +1,44 @@
 package com.avmathman.elasticurl.data.URLShortner;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import org.antlr.v4.runtime.misc.NotNull;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.sql.Date;
+import java.util.Date;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@Document(collection="urlshortner")
 public class URLShortnerEntity {
 
     /**
      * The user identifier.
      */
     @Id
-    @Column(name = "id")
-    @NotNull
-    private Long id;
+    @Field(name = "id")
+    private String id;
 
     /**
      * The encoded ID for shortened URL.
      */
-    @Column(name = "shortUrl")
-    @NotNull
+    @Field(name = "shortURL")
     private String shortURL;
 
     /**
      * The actual URL.
      */
-    @Column(name = "actualUrl")
-    @NotNull
+    @Field(name = "actualURL")
     private String actualURL;
 
     /**
      * The date when the encoded short URL was created.
      */
-    @Column(name = "createdAt")
-    @CreationTimestamp
-    @NotNull
+    @Field(name = "createdAt")
+    @CreatedDate
     private Date createdAt;
 }

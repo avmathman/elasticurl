@@ -17,7 +17,7 @@ public class URLShortnerModel {
     /**
      * The user identifier.
      */
-    private Long id;
+    private String id;
 
     /**
      * The encoded ID for shortened URL.

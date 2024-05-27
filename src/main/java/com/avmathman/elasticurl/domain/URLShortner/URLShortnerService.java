@@ -33,7 +33,7 @@ public class URLShortnerService implements IURLShortner {
         String shortURL = base64ConverterService.encode(generatedID);
 
         URLShortnerModel model = new URLShortnerModel();
-        model.setId(generatedID);
+        model.setId(generatedID.toString());
         model.setShortURL(shortURL);
         model.setActualURL(dto.getUrl());
 
@@ -45,7 +45,7 @@ public class URLShortnerService implements IURLShortner {
 
     @Override
     public URLShortnerModel getShortURL(String encodedID) {
-        URLShortnerEntity urlShortnerEntity = repository.findByShortUrl(encodedID).orElse(null);
+        URLShortnerEntity urlShortnerEntity = repository.findByShortURL(encodedID).orElse(null);
         URLShortnerModel urlShortnerModel = mapper.toModel(urlShortnerEntity);
 
         return urlShortnerModel;

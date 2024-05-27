@@ -38,15 +38,14 @@ repositories {
 dependencies {
 
 	// Spring dependencies:
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-//	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	implementation "org.springframework.boot:spring-boot-starter-data-mongodb:${springBootVersion}"
 //	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
 
 	// Annotation processors:
+	compileOnly "org.projectlombok:lombok:${lombokVersion}"
 	implementation("org.mapstruct:mapstruct:$mapStructVersion")
 	compileOnly("org.mapstruct:mapstruct-processor:$mapStructVersion")
-	compileOnly "org.projectlombok:lombok:${lombokVersion}"
 	annotationProcessor (
 			"org.projectlombok:lombok:${lombokVersion}",
 			"org.mapstruct:mapstruct-processor:$mapStructVersion"
