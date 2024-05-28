@@ -51,9 +51,9 @@ public class URLShortnerController {
      */
     @GetMapping("/{encodedId}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> getShortURL(@PathVariable String encodedId) {
+    public ResponseEntity<URLShortnerModel> getShortURL(@PathVariable String encodedId) {
         URLShortnerModel model = this.urlShortnerService.getShortURL(encodedId);
 
-        return new ResponseEntity<>(model.getShortURL(), HttpStatus.OK);
+        return new ResponseEntity<>(model, HttpStatus.OK);
     }
 }
