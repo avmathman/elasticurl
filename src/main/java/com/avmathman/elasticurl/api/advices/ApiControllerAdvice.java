@@ -1,5 +1,6 @@
 package com.avmathman.elasticurl.api.advices;
 
+import com.avmathman.elasticurl.domain.BaseConverter.exception.BaseConverterException;
 import com.avmathman.elasticurl.domain.URLShortner.exception.URLNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,10 +30,26 @@ public class ApiControllerAdvice extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     @ExceptionHandler(URLNotFoundException.class)
-    public ResponseEntity<Object> handleItemNotFoundException(URLNotFoundException ex, WebRequest request) {
+    public ResponseEntity<Object> handleURLNotFoundException(URLNotFoundException ex, WebRequest request) {
         log.error("Object does not exist on {}: {}", request.getContextPath(), ex.getMessage());
 
         final ApiErrorResponse apiError = new ApiErrorResponse(HttpStatus.NOT_FOUND, ex.getLocalizedMessage());
+        return handleExceptionInternal(ex, apiError, new HttpHeaders(), apiError.status(), request);
+    }
+
+    /**
+     * Handles URLNotFoundException thrown by REST API methods.
+     *
+     * @param ex - exception instance.
+     * @param request - request instance.
+     */
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    @ResponseBody
+    @ExceptionHandler(BaseConverterException.class)
+    public ResponseEntity<Object> handleBaseConverterException(BaseConverterException ex, WebRequest request) {
+        log.error("Object is null on {}: {}", request.getContextPath(), ex.getMessage());
+
+        final ApiErrorResponse apiError = new ApiErrorResponse(HttpStatus.NOT_ACCEPTABLE, ex.getLocalizedMessage());
         return handleExceptionInternal(ex, apiError, new HttpHeaders(), apiError.status(), request);
     }
 }

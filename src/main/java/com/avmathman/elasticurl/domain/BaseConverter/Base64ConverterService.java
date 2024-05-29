@@ -1,5 +1,6 @@
 package com.avmathman.elasticurl.domain.BaseConverter;
 
+import com.avmathman.elasticurl.domain.BaseConverter.exception.BaseConverterException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,13 +30,18 @@ public class Base64ConverterService implements IBaseConverter {
 
     @Override
     public long decode(String value) {
+        if (value == null) {
+            throw new BaseConverterException("Value cannot be null");
+        }
+
         char[] chars = value.toCharArray();
         long result = 0;
 
         int counter = chars.length - 1;
+        int length = chars.length;
         while(counter >= 0) {
             long current_index = BASE_DIGITS.indexOf(chars[counter]);
-            long current_value = current_index * (long)(Math.pow(62, counter));
+            long current_value = current_index * (long)(Math.pow(62, length - counter - 1));
 
             result += current_value;
             counter--;
