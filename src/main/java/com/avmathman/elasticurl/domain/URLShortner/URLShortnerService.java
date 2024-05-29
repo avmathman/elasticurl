@@ -5,6 +5,7 @@ import com.avmathman.elasticurl.data.URLShortner.URLShortnerRepository;
 import com.avmathman.elasticurl.domain.BaseConverter.Base64ConverterService;
 import com.avmathman.elasticurl.domain.SnowflakeIDGenerator.SnowflakeIDGeneratorService;
 import com.avmathman.elasticurl.api.controllers.URLShortner.dto.ShortnerURLDto;
+import com.avmathman.elasticurl.domain.URLShortner.exception.URLNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -45,7 +46,9 @@ public class URLShortnerService implements IURLShortner {
 
     @Override
     public URLShortnerModel getShortURL(String encodedID) {
-        URLShortnerEntity urlShortnerEntity = repository.findByShortURL(encodedID).orElse(null);
+        URLShortnerEntity urlShortnerEntity = repository
+                .findByShortURL(encodedID)
+                .orElseThrow(() -> new URLNotFoundException("No data found, encoded ID: " + encodedID));
         URLShortnerModel urlShortnerModel = mapper.toModel(urlShortnerEntity);
 
         return urlShortnerModel;
