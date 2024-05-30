@@ -30,8 +30,9 @@ configurations {
 		extendsFrom annotationProcessor
 	}
 
-	integrationTestCompile.extendsFrom testCompile
-	integrationTestRuntime.extendsFrom testRuntime
+	integrationTestRuntime.extendsFrom testRuntimeOnly
+	integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+	integrationTestImplementation.extendsFrom testImplementation
 }
 
 repositories {
@@ -46,6 +47,8 @@ sourceSets {
 			compileClasspath += main.output + test.output + main.compileClasspath + test.compileClasspath
 			runtimeClasspath += main.output + test.output + main.runtimeClasspath + test.runtimeClasspath
 		}
+
+		resources.srcDir file('src/integration-test/resources')
 	}
 }
 
@@ -74,12 +77,12 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-task integrationTest(type: Test) {
+tasks.register('integrationTest', Test) {
 	useJUnitPlatform()
 
 	description = "Runs the integration tests"
 	group = "verification"
 	testClassesDirs = sourceSets.integrationTest.output.classesDirs
 	classpath = sourceSets.integrationTest.runtimeClasspath
-	maxHeapSize = '3072m'
+	maxHeapSize = '1024m'
 }
