@@ -2,6 +2,7 @@ package com.avmathman.elasticurl.api.controllers.BaseConverter;
 
 import com.avmathman.elasticurl.api.ElasticURLApiLocations;
 import com.avmathman.elasticurl.domain.BaseConverter.Base64ConverterService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ public class BaseConverterController {
      *
      * @param baseConverter - {@link Base64ConverterService} instance.
      */
+    @Autowired
     public BaseConverterController(Base64ConverterService baseConverter) {
         this.baseConverter = baseConverter;
     }
