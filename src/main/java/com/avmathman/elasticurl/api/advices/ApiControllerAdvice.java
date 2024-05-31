@@ -1,6 +1,7 @@
 package com.avmathman.elasticurl.api.advices;
 
 import com.avmathman.elasticurl.domain.BaseConverter.exception.BaseConverterException;
+import com.avmathman.elasticurl.domain.SnowflakeIDGenerator.exception.SnowflakeIdGeneratorException;
 import com.avmathman.elasticurl.domain.URLShortner.exception.URLNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -50,6 +51,22 @@ public class ApiControllerAdvice extends ResponseEntityExceptionHandler {
         log.error("Object is null on {}: {}", request.getContextPath(), ex.getMessage());
 
         final ApiErrorResponse apiError = new ApiErrorResponse(HttpStatus.NOT_ACCEPTABLE, ex.getLocalizedMessage());
+        return handleExceptionInternal(ex, apiError, new HttpHeaders(), apiError.status(), request);
+    }
+
+    /**
+     * Handles SnowflakeIdGeneratorException thrown by REST API methods.
+     *
+     * @param ex - exception instance.
+     * @param request - request instance.
+     */
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    @ExceptionHandler(SnowflakeIdGeneratorException.class)
+    public ResponseEntity<Object> handleSnowflakeIdGeneratorException(SnowflakeIdGeneratorException ex, WebRequest request) {
+        log.error("Object does not exist on {}: {}", request.getContextPath(), ex.getMessage());
+
+        final ApiErrorResponse apiError = new ApiErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage());
         return handleExceptionInternal(ex, apiError, new HttpHeaders(), apiError.status(), request);
     }
 }

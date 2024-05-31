@@ -3,6 +3,7 @@ package com.avmathman.elasticurl.domain.SnowflakeIDGenerator;
 import com.avmathman.elasticurl.common.constants.IDGeneratorConstants;
 import com.avmathman.elasticurl.common.enums.KeyEnum;
 import com.avmathman.elasticurl.common.utils.MachineUtils;
+import com.avmathman.elasticurl.domain.SnowflakeIDGenerator.exception.SnowflakeIdGeneratorException;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -69,7 +70,7 @@ public class SnowflakeIDGeneratorService implements ISnowflakeIDGenerator {
         long currentTimestamp = this.timestamp();
 
         if(currentTimestamp < lastTimestamp) {
-            throw new IllegalStateException("Invalid System Clock!");
+            throw new SnowflakeIdGeneratorException("Invalid System Clock!");
         }
 
         if (currentTimestamp == lastTimestamp) {
