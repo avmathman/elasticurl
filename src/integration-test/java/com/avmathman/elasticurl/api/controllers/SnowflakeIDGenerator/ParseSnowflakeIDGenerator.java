@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -42,7 +43,7 @@ public class ParseSnowflakeIDGenerator {
         expected.put(KeyEnum.MACHINE, 0L);
         expected.put(KeyEnum.SEQUENCE, 0L);
 
-        when(service.parse(ID)).thenReturn(expected);
+        when(service.parse(anyLong())).thenReturn(expected);
 
         //Act
         String response = this.mockMvc
